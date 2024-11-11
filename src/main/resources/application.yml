@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: oAuth2
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:3242/mbanking_prod
+    username: springdb
+    password: ITE2@2024
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: Ov23liJb4ABO36tZJMTt
+            client-secret: 5fe56d65d247d2aa4e5caa3e59c2e1ea0190689d
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: read:user, user:email
+            provider: github
+        provider:
+          github:
+            authorization-uri: https://github.com/login/oauth/authorize
+            token-uri: https://github.com/login/oauth/access_token
+            user-info-uri: https://api.github.com/user
+            user-name-attribute: id
