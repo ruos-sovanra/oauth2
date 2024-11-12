@@ -2,8 +2,11 @@ package istad.co.oauth2;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
+import org.springframework.security.oauth2.server.resource.web.DefaultBearerTokenResolver;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -28,10 +31,19 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(customOAuth2UserService)
                         )
-                        .defaultSuccessUrl("/auth/loginSuccess", true)
+                        .defaultSuccessUrl("/loginSuccess", true)
                 )
                 .addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
+        http.oauth2ResourceServer(server -> server
+                .bearerTokenResolver(bearerTokenResolver())
+                .jwt(Customizer.withDefaults()));
+
         return http.build();
+    }
+
+    @Bean
+    public BearerTokenResolver bearerTokenResolver() {
+        return new DefaultBearerTokenResolver();
     }
 }

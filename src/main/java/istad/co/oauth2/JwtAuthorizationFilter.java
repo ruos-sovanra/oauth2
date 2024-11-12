@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
-    private final String secretKey = "yourSecretKey"; // Same as in JwtTokenProvider
+    private final String secretKey = "yourSecretKey";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)

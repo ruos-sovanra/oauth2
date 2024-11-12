@@ -18,4 +18,5 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         attributes.put("access_token", userRequest.getAccessToken().getTokenValue());
         return new CustomOAuth2User(oAuth2User, attributes);
     }
+
 }
